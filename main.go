@@ -27,6 +27,9 @@ var (
 var (
 	cachedData APIData
 	cacheMutex sync.RWMutex
+	httpClient = &http.Client{
+		Timeout: 30 * time.Second,
+	}
 )
 
 type RepoInfo struct {
@@ -78,8 +81,7 @@ func makeRequest(url string) (*http.Response, error) {
 		req.Header.Set("Authorization", "token "+GithubToken)
 	}
 
-	client := &http.Client{Timeout: 30 * time.Second}
-	return client.Do(req)
+	return httpClient.Do(req)
 }
 
 func handleRateLimit(resp *http.Response) error {
