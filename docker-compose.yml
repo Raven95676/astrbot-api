@@ -1,0 +1,11 @@
+services:
+  astrbot-api:
+    build: .
+    ports:
+      - "10010:10010"
+    environment:
+      - PORT=10010
+      - REFRESH_MINUTES=45
+      - MAX_GOROUTINES=5
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    restart: unless-stopped
